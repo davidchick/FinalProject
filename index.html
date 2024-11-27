@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Working On My Final Project</title>
+
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+
+    <div class="container">
+    <h1>Player 1</h1>
+    
+    <form id="player-one" action="">
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input
+            id="name"
+            class="form-control validate-input"
+            type="text"
+            name="Name"
+        />
+        <small class="error" aria-live="polite"></small>
+    </div>
+
+    <div class="form-group">
+        <label for="poison">Pick Your Poison</label>
+        <select class="form-control" name="Poison" id="poison">
+          <option value="choose" selected="selected" disabled>Choose one</option>
+          <option value="gin">Gin</option>
+          <option value="rum">Rum</option>
+          <option value="bourbon">Bourbon</option>
+        </select>
+        <small class="error" aria-live="polite"></small>
+    </div>
+
+    <div id="drinks" class="form-group row"></div>
+
+    <div class="form-group">
+    <input class="btn btn-primary" type="submit" value="Update Player 1" />
+    </div>
+
+    </form>
+
+
+
+    </div>
+
+    <script src="./CardDeck.js"></script>
+    <script src="./index.js"></script>
+
+
+</body>
+</html>
