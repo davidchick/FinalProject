@@ -12,9 +12,9 @@ a {
 
   /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
-  float: left;
-  width: 33.33%;
-  padding: 20px;
+  float: center;
+  padding: 4px;
+  border: 3px solid white;
 }
 
 /* Clear floats after image containers */
@@ -22,4 +22,25 @@ a {
   content: "";
   clear: both;
   display: table;
+}
+
+.invalid {
+  border: 1px solid red;
+  background-color: #ffdddd;
+}
+
+input:invalid {
+  border: 1px solid red;
+}
+
+input:valid {
+  border: 1px solid green;
+}
+
+.selected {
+  border: 3px solid magenta;
+}
+
+.hidden {
+  display: none;
 }
