@@ -59,5 +59,78 @@ const getNewDeck = function() {
 
 }
 
+const renderCard = function(card) {
 
+  const suitCodes = {
+    spades: '\u2660',
+    hearts: '\u2665',
+    clubs: '\u2663',
+    diamonds: '\u2666'
+  };
+
+  //cardsDealt++;
+
+  const divEl = document.createElement("div");
+
+  const divTextNode = document.createTextNode(`${card.displayVal}`);
+  divEl.appendChild(divTextNode);
+
+  const brEl = document.createElement("br");
+  divEl.appendChild(brEl);
+
+  const divText2Node = document.createTextNode(`${suitCodes[card.suit]}`);
+  divEl.appendChild(divText2Node);
+
+  divEl.className = "rcorners";
+  divEl.id = card.id;
+  divEl.tabIndex = cardsDealt;
+  divEl.style.background = 'white';
+
+  if (card.suit === 'hearts' || card.suit === 'diamonds') {
+      divEl.style.color = 'red';
+  }
+
+  divEl.addEventListener("click", (event) => {
+
+      if (divEl.style.background === 'white') {
+      
+          divEl.style.background = 'lightblue';
+
+          selectedCards.push(card);
+
+          if (selectedCards.length > 2) {
+
+              document.getElementById(selectedCards[0].id).style.background = "white";
+      
+              selectedCards.shift();
+
+          }        
+
+      } else {
+
+          divEl.style.background = 'white';
+
+          selectedCards = selectedCards.filter((scard) => scard.id !== card.id);
+
+      }
+
+  }); 
+
+  const body = document.getElementById('cards');
+  body.appendChild(divEl);
+
+}
+
+const renderHTML = function(tag, text) {
+
+  const pEl = document.createElement(tag);
   
+  if (text) {
+      const pTextNode = document.createTextNode(text);
+      pEl.appendChild(pTextNode);
+  }
+
+  const body = document.getElementById('cards');
+  body.appendChild(pEl);
+
+}

@@ -4,11 +4,11 @@ a {
     border-radius: 5px;
     font-size: 0.8em;
     color: white;
-  }
+}
 
 .vivid {
     background-color: #910991;
-  }
+}
 
   /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
@@ -43,4 +43,26 @@ input:valid {
 
 .hidden {
   display: none;
+}
+
+.rcorners {
+  display: inline-block;
+  border-radius: 25px;
+  border: 2px solid black;
+  padding: 20px;
+  margin: 10px;
+  width: 140px;
+  height: 200px;
+  font-size: 36px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 80px;
+}
+
+.rcorners:focus {
+  background-color: lightblue;
+}
+
+.rcorners:active {
+  outline: 2px solid black;
 }

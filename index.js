@@ -54,21 +54,15 @@ const fetchDrinks = function(booze) {
   });
 };
 
-
 selectBooze.addEventListener('change', (e) => {
-
   fetchDrinks(selectBooze.value);  
-
 });
 
 shuffleButton.addEventListener('click', (e) => {
-
   fetchDrinks(selectBooze.value);
-
 });
 
 updatePlayer.addEventListener('click', (e) => {
-
   e.preventDefault();
 
   //validate form
@@ -79,10 +73,10 @@ updatePlayer.addEventListener('click', (e) => {
   const drinksDiv = document.getElementById('drinks');
 
   for (const node of drinksDiv.childNodes) {
-      if (node.classList.contains('selected')) {
-        drinkOfChoice = node.childNodes[0].innerText;
-      }
+    if (node.classList.contains('selected')) {
+      drinkOfChoice = node.childNodes[0].innerText;
     }
+  }
 
   message = `${playerName} is served a delicious ${drinkOfChoice}. Let's play cards!`;
   
@@ -96,6 +90,48 @@ updatePlayer.addEventListener('click', (e) => {
 
 });
 
+class CardPlayer {
+  constructor (name) {
+    this.name = name;
+    this.hand = [];
+    this.drinkOfChoice = '';
+  };
+
+  drawACard(deck) {
+   const {hand} = this;
+      deck = drawACard(deck);
+      hand.push(deck.shift());
+      return deck;
+   };
+};
+
 let myDeck = getNewDeck();
 let myCard = '';
 
+const player1 = new CardPlayer('Buddy');
+const player2 = new CardPlayer('Ree');
+
+//Start the game, start rendering the page
+
+let cardsDealt = 0;
+let selectedCards = [];
+
+renderHTML('h3', `${player1.name}'s hand`);
+
+for (let i = 0; i < 6; i++) {
+
+    myDeck = player1.drawACard(myDeck);
+    renderCard(player1.hand[i]);
+
+}
+
+renderHTML('h3', `${player2.name}'s hand`);
+
+for (let i = 0; i < 6; i++) {
+
+    myDeck = player2.drawACard(myDeck);
+    renderCard(player2.hand[i]);
+
+}
+
+console.log(myDeck.length);
