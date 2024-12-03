@@ -10,14 +10,12 @@ a {
     background-color: #910991;
 }
 
-  /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
   float: center;
   padding: 4px;
   border: 3px solid white;
 }
 
-/* Clear floats after image containers */
 .row::after {
   content: "";
   clear: both;
@@ -57,6 +55,22 @@ input:valid {
   text-align: center;
   vertical-align: middle;
   line-height: 80px;
+}
+
+.rcorners-facedown {
+  display: inline-block;
+  border-radius: 25px;
+  border: 2px solid black;
+  padding: 20px;
+  margin: 10px;
+  width: 140px;
+  height: 200px;
+  color: blue;
+  font-size: 8px;
+  line-height: 0px;
+  text-align: center;
+  text-wrap: wrap;
+  vertical-align: middle;
 }
 
 .rcorners:focus {

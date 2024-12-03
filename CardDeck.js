@@ -45,23 +45,23 @@ const getNewDeck = function() {
 
 // draws a random card and puts it on top of the deck
 
-  const drawACard = function(deck) {
+const drawACard = function(deck) {
 
-    let cardsLeft = deck.length;
-    let cardNumber = Math.floor(Math.random() * cardsLeft);
-    let chosenCard = deck[cardNumber];
+  let cardsLeft = deck.length;
+  let cardNumber = Math.floor(Math.random() * cardsLeft);
+  let chosenCard = deck[cardNumber];
  
-    deck.splice(cardNumber, 1);
-    deck.unshift(chosenCard);
+  deck.splice(cardNumber, 1);
+  deck.unshift(chosenCard);
 
     //console.log(`chosen card: ${chosenCard.id} cards remaining: ${deck.length}`)
-    return (deck);
+  return (deck);
 
 }
 
 // render card html
 
-const renderCard = function(card) {
+const renderCard = function(card, faceUp) {
 
   const suitCodes = {
     spades: '\u2660',
@@ -71,46 +71,75 @@ const renderCard = function(card) {
   };
 
   const divEl = document.createElement("div");
-
-  const divTextNode = document.createTextNode(`${card.displayVal}`);
-  divEl.appendChild(divTextNode);
-
-  const brEl = document.createElement("br");
-  divEl.appendChild(brEl);
-
-  const divText2Node = document.createTextNode(`${suitCodes[card.suit]}`);
-  divEl.appendChild(divText2Node);
-
-  divEl.className = "rcorners";
   divEl.id = card.id;
-  //divEl.tabIndex = cardsDealt;
-  divEl.style.background = 'white';
 
-  if (card.suit === 'hearts' || card.suit === 'diamonds') {
-      divEl.style.color = 'red';
+  if (faceUp) {
+
+    divEl.className = "rcorners";
+
+    const displayText = document.createTextNode(card.displayVal);
+    divEl.appendChild(displayText);
+
+    const brEl = document.createElement("br");
+    divEl.appendChild(brEl);
+
+    const displaySuit = document.createTextNode(suitCodes[card.suit]);
+    divEl.appendChild(displaySuit);
+
+    divEl.style.background = 'white';
+
+    if (card.suit === 'hearts' || card.suit === 'diamonds') {
+        divEl.style.color = 'red';
+    }
+
+    divEl.addEventListener('click', selectCards);
+
+  } else {
+
+    divEl.className = "rcorners-facedown";
+
+    let filler = '';
+
+    for (let i=0; i < 15; i++) {
+      filler = filler.concat(suitCodes.diamonds)
+    }
+
+    for (let j = 0; j < 11; j++) {
+      const fillerText = document.createTextNode(filler);
+      const fillerP = document.createElement('p');
+      fillerP.appendChild(fillerText);
+      divEl.appendChild(fillerP);
+    }
+
+    
+    divEl.addEventListener('click', flipCard);
+    divEl.myParam = card;
+
   }
 
-  //divEl.addEventListener("click", selectCards);
-
-  cardsDiv.appendChild(divEl);
+  return divEl;
 
 }
 
-// tbd
+// tbd - what happens when a face-up card is clicked
+
+let selectedDiv = [];
 
 const selectCards = function() {
+
+  const divEl = this;
 
   if (divEl.style.background === 'white') {
     
     divEl.style.background = 'lightblue';
 
-    selectedCards.push(card);
+    selectedDiv.push(divEl);
 
-    if (selectedCards.length > 2) {
+    if (selectedDiv.length > 2) {
 
-      document.getElementById(selectedCards[0].id).style.background = "white";
+      selectedDiv[0].style.background = "white";
     
-        selectedCards.shift();
+      selectedDiv.shift();
 
       }        
 
@@ -118,13 +147,35 @@ const selectCards = function() {
 
       divEl.style.background = 'white';
 
-      selectedCards = selectedCards.filter((scard) => scard.id !== card.id);
+      selectedDiv = selectedDiv.filter((div) => div.getAttribute('id') !== divEl.getAttribute('id'));
 
     }
 
 }
 
-// render any tag
+//  what to do with a face down card
+
+const flipCard = function(evt) {
+
+  //window.alert(evt.currentTarget.myParam.id);
+
+  let targetCard = evt.currentTarget.myParam;
+  evt.currentTarget.insertAdjacentElement('afterend', renderCard(targetCard, true));
+  evt.currentTarget.remove();
+
+  const timeFunc = function(thing) {
+    document.getElementById(targetCard.id).insertAdjacentElement('afterend', renderCard(targetCard));
+    document.getElementById(targetCard.id).remove();
+
+  }
+
+  setTimeout(function() {
+    timeFunc();
+  }, 1000);
+
+}
+
+// render any tag within the cards div
 
 const renderHTML = function(tag, text) {
 
