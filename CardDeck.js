@@ -59,6 +59,8 @@ const getNewDeck = function() {
 
 }
 
+// render card html
+
 const renderCard = function(card) {
 
   const suitCodes = {
@@ -67,8 +69,6 @@ const renderCard = function(card) {
     clubs: '\u2663',
     diamonds: '\u2666'
   };
-
-  //cardsDealt++;
 
   const divEl = document.createElement("div");
 
@@ -83,43 +83,48 @@ const renderCard = function(card) {
 
   divEl.className = "rcorners";
   divEl.id = card.id;
-  divEl.tabIndex = cardsDealt;
+  //divEl.tabIndex = cardsDealt;
   divEl.style.background = 'white';
 
   if (card.suit === 'hearts' || card.suit === 'diamonds') {
       divEl.style.color = 'red';
   }
 
-  divEl.addEventListener("click", (event) => {
+  //divEl.addEventListener("click", selectCards);
 
-      if (divEl.style.background === 'white') {
-      
-          divEl.style.background = 'lightblue';
-
-          selectedCards.push(card);
-
-          if (selectedCards.length > 2) {
-
-              document.getElementById(selectedCards[0].id).style.background = "white";
-      
-              selectedCards.shift();
-
-          }        
-
-      } else {
-
-          divEl.style.background = 'white';
-
-          selectedCards = selectedCards.filter((scard) => scard.id !== card.id);
-
-      }
-
-  }); 
-
-  const body = document.getElementById('cards');
-  body.appendChild(divEl);
+  cardsDiv.appendChild(divEl);
 
 }
+
+// tbd
+
+const selectCards = function() {
+
+  if (divEl.style.background === 'white') {
+    
+    divEl.style.background = 'lightblue';
+
+    selectedCards.push(card);
+
+    if (selectedCards.length > 2) {
+
+      document.getElementById(selectedCards[0].id).style.background = "white";
+    
+        selectedCards.shift();
+
+      }        
+
+    } else {
+
+      divEl.style.background = 'white';
+
+      selectedCards = selectedCards.filter((scard) => scard.id !== card.id);
+
+    }
+
+}
+
+// render any tag
 
 const renderHTML = function(tag, text) {
 
@@ -130,7 +135,20 @@ const renderHTML = function(tag, text) {
       pEl.appendChild(pTextNode);
   }
 
-  const body = document.getElementById('cards');
-  body.appendChild(pEl);
+  cardsDiv.appendChild(pEl);
 
+}
+
+// get or set cards
+
+const getSetCards = function(player, cards) {
+  if (cards) {
+    let cardsJSON = JSON.stringify(cards);
+    localStorage.setItem(player, cardsJSON);
+    //console.log(cardsJSON);
+    return cards;
+  } else {
+    let cardsJSON = localStorage.getItem(player);
+    return JSON.parse(cardsJSON);
+  }
 }
