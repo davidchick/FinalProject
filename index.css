@@ -6,6 +6,10 @@ a {
   color: white;
 }
 
+.move-item {
+  background-color: #349109;
+}
+
 .column {
   float: center;
   padding: 4px;

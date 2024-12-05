@@ -14,6 +14,10 @@ const cardsDiv = document.getElementById('cards');
 shuffleButton.classList.add('hidden');
 enclosingDrinksDiv.classList.add('hidden');
 
+let selectedCards = [];
+let player1 = {};
+let player2 = {};
+
 class CardPlayer {
   constructor (name) {
     this.name = name;
@@ -29,7 +33,7 @@ class CardPlayer {
    };
 };
 
-//sets or gets a player name from local storage
+//sets or gets player one's name from local storage
 
 const playerName = function(name) {
   if (name) {
@@ -40,14 +44,14 @@ const playerName = function(name) {
   }
 }
 
-// sets or gets a drink of choice from local storage
+// sets or gets player one's  drink of choice from local storage
 
 const drinkOfChoice = function(drink) {
   if (drink) {
-    localStorage.setItem('p1drinkofchoice', drink);
+    localStorage.setItem('player1drinkofchoice', drink);
     return drink;
   } else {
-    return localStorage.getItem('p1drinkofchoice');
+    return localStorage.getItem('player1drinkofchoice');
   }
 }
 
@@ -55,20 +59,23 @@ const drinkOfChoice = function(drink) {
 
 const playGame = function() {
 
-  const player1 = new CardPlayer(playerName());
-  const player2 = new CardPlayer('The Dealer');
+  //if (playerName() && drinkOfChoice()) {
+    theForm.classList.add('hidden');
+  //}
 
+  player1.name ? player1.name = inputName.value : player1 = new CardPlayer(playerName(inputName.value));
+  player2.name ? player2.name = 'The Dealer' : player2 = new CardPlayer('The Dealer');
+  
   let myDeck = getSetCards('thedeck') || getNewDeck();
-
-  player1.drinkOfChoice = drinkOfChoice();
-  player2.drinkOfChoice = 'Gin and Tonic';
 
   player1.hand = getSetCards('player1hand') || [];
   player2.hand = getSetCards('player2hand') || [];
 
+  player2.drinkOfChoice = 'Gin and Tonic';
+
   inputName.value = playerName();
 
-  let message = `Welcome, ${player1.name}! Please enjoy this delicious ${player1.drinkOfChoice}. Let's play cards!`;
+  let message = `Welcome, ${playerName()}! Please enjoy this delicious ${drinkOfChoice()}. Let's play cards!`;
 
   messageDiv.innerHTML = '';
   messageDiv.appendChild(renderHTML('h3', message));
@@ -76,7 +83,8 @@ const playGame = function() {
   cardsDiv.innerHTML = '';
   cardsDiv.appendChild(renderHTML('h4', 'Your hand:'));
 
-  while (player1.hand.length < 6) {
+  
+  while (player1.hand.length < 5) {
     myDeck = player1.drawACard(myDeck);
   }
 
@@ -86,9 +94,36 @@ const playGame = function() {
     cardsDiv.appendChild(renderCard(card, true));
   }
 
+  const tradeButton = document.createElement('button');
+  tradeButton.innerText = 'Trade Cards';
+  tradeButton.classList.add('btn');
+  tradeButton.classList.add('btn-primary');
+  tradeButton.id = 'tradeButton';
+  tradeButton.disabled = true;
+
+  tradeButton.addEventListener('click', () => {
+    const selectedCardsJSON = localStorage.getItem('selectedCards'); 
+    selectedCards = JSON.parse(selectedCardsJSON) || [];
+
+    player1.hand = getSetCards('player1hand', selectedCards);
+
+    localStorage.removeItem('selectedCards');
+    selectedCards = [];
+
+    playGame();
+
+  });
+
+  
+  cardsDiv.appendChild(tradeButton);
+
+  cardsDiv.appendChild(renderHTML('p', '(Pick the cards you want to keep, then click trade)'));
+
+
   cardsDiv.appendChild(renderHTML('h4', `${player2.name}'s hand:`));
 
-  while (player2.hand.length < 6) {
+  
+  while (player2.hand.length < 5) {
     myDeck = player2.drawACard(myDeck);
   }
 
@@ -100,10 +135,11 @@ const playGame = function() {
 
   getSetCards('thedeck', myDeck);
 
-  //console.log(`cards left: ${myDeck.length}`)
+  //console.log(getSetCards('player1hand'));
+  console.log(`cards left: ${myDeck.length}`);
 
 }
 
-if (getSetCards('player1hand')) {
-  playGame();
-}
+//if (getSetCards('player1hand')) {
+  //playGame();
+//}

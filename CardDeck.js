@@ -124,8 +124,6 @@ const renderCard = function(card, faceUp) {
 
 // what happens when a face-up card is clicked
 
-let selectedCards = [];
-
 const selectCards = function(evt) {
 
   const targetCard = evt.currentTarget.myParam;
@@ -137,7 +135,7 @@ const selectCards = function(evt) {
 
     selectedCards.push(targetCard);
 
-    if (selectedCards.length > 2) {
+    if (selectedCards.length > 4) {
 
       document.getElementById(selectedCards[0].id).style.background = "white";
       selectedCards.shift();
@@ -150,6 +148,15 @@ const selectCards = function(evt) {
     selectedCards = selectedCards.filter((card) => card.id !== cardDiv.getAttribute('id'));
 
   }
+
+  if (selectedCards.length > 1) {
+    document.getElementById('tradeButton').disabled = false;
+  } else {
+    document.getElementById('tradeButton').disabled = true;
+  }
+
+  const selectedCardsJSON = JSON.stringify(selectedCards);
+  localStorage.setItem('selectedCards', selectedCardsJSON);
 
 }
 
