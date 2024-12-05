@@ -126,27 +126,28 @@ const renderCard = function(card, faceUp) {
 
 let selectedCards = [];
 
-const selectCards = function() {
+const selectCards = function(evt) {
 
-  const divEl = this;
+  const targetCard = evt.currentTarget.myParam;
+  const cardDiv = evt.currentTarget;
 
-  if (divEl.style.background === 'white') {
+  if (cardDiv.style.background === 'white') {
     
-    divEl.style.background = 'lightblue';
+    cardDiv.style.background = 'lightblue';
 
-    selectedCards.push(divEl);
+    selectedCards.push(targetCard);
 
     if (selectedCards.length > 2) {
 
-      selectedCards[0].style.background = "white";
+      document.getElementById(selectedCards[0].id).style.background = "white";
       selectedCards.shift();
 
     }        
 
   } else {
 
-    divEl.style.background = 'white';
-    selectedCards = selectedCards.filter((div) => div.getAttribute('id') !== divEl.getAttribute('id'));
+    cardDiv.style.background = 'white';
+    selectedCards = selectedCards.filter((card) => card.id !== cardDiv.getAttribute('id'));
 
   }
 
