@@ -1,13 +1,20 @@
 describe('Final Project Tests', () => {
-    it('should do math', () => {
-        let testVal = 3;
-        const results = doSomeMath(testVal);
-        expect(results).toBe(-21);
+
+    it('should remember a player name', () => {
+        let newName = playerName('Johanna');
+        const results = playerName();
+        expect(results).toBe('Johanna');
     });
 
-    it('eat dirt', () => {
-        let dirt = 'eat dirt';
-        const runIt = eatTheDirt(dirt);
-        expect(runIt).toBe('yum');
+    it('should blah', () => {
+        let num = 1;
+        const results = num;
+        expect(results).toBe(1);
     });
+
+    it('should yaaaah', () => {
+        const results = yahFunc();
+        expect(results).toBe('Yaaaah');
+    });
+
 });

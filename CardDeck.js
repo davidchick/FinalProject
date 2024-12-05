@@ -1,3 +1,5 @@
+//returns a new, ordered deck of 52 cards
+
 const getNewDeck = function() {
     const deck = [];
     const suits = ['hearts', 'spades', 'clubs', 'diamonds'];
@@ -54,12 +56,11 @@ const drawACard = function(deck) {
   deck.splice(cardNumber, 1);
   deck.unshift(chosenCard);
 
-    //console.log(`chosen card: ${chosenCard.id} cards remaining: ${deck.length}`)
   return (deck);
 
 }
 
-// render card html
+// renders card html, face up or face down. returns an HTML element.
 
 const renderCard = function(card, faceUp) {
 
@@ -72,6 +73,8 @@ const renderCard = function(card, faceUp) {
 
   const divEl = document.createElement("div");
   divEl.id = card.id;
+
+  divEl.myParam = card;
 
   if (faceUp) {
 
@@ -111,9 +114,7 @@ const renderCard = function(card, faceUp) {
       divEl.appendChild(fillerP);
     }
 
-    
     divEl.addEventListener('click', flipCard);
-    divEl.myParam = card;
 
   }
 
@@ -121,9 +122,9 @@ const renderCard = function(card, faceUp) {
 
 }
 
-// tbd - what happens when a face-up card is clicked
+// what happens when a face-up card is clicked
 
-let selectedDiv = [];
+let selectedCards = [];
 
 const selectCards = function() {
 
@@ -133,40 +134,35 @@ const selectCards = function() {
     
     divEl.style.background = 'lightblue';
 
-    selectedDiv.push(divEl);
+    selectedCards.push(divEl);
 
-    if (selectedDiv.length > 2) {
+    if (selectedCards.length > 2) {
 
-      selectedDiv[0].style.background = "white";
-    
-      selectedDiv.shift();
+      selectedCards[0].style.background = "white";
+      selectedCards.shift();
 
-      }        
+    }        
 
-    } else {
+  } else {
 
-      divEl.style.background = 'white';
+    divEl.style.background = 'white';
+    selectedCards = selectedCards.filter((div) => div.getAttribute('id') !== divEl.getAttribute('id'));
 
-      selectedDiv = selectedDiv.filter((div) => div.getAttribute('id') !== divEl.getAttribute('id'));
-
-    }
+  }
 
 }
 
-//  what to do with a face down card
+//  what happens when a face-down card is clicked
 
 const flipCard = function(evt) {
-
-  //window.alert(evt.currentTarget.myParam.id);
 
   let targetCard = evt.currentTarget.myParam;
   evt.currentTarget.insertAdjacentElement('afterend', renderCard(targetCard, true));
   evt.currentTarget.remove();
 
-  const timeFunc = function(thing) {
+  const timeFunc = function() {
     document.getElementById(targetCard.id).insertAdjacentElement('afterend', renderCard(targetCard));
     document.getElementById(targetCard.id).remove();
-
   }
 
   setTimeout(function() {
@@ -175,31 +171,30 @@ const flipCard = function(evt) {
 
 }
 
-// render any tag within the cards div
+// build an HTML element with or without text
 
 const renderHTML = function(tag, text) {
 
-  const pEl = document.createElement(tag);
-  
+  const tagEl = document.createElement(tag);
   if (text) {
-      const pTextNode = document.createTextNode(text);
-      pEl.appendChild(pTextNode);
+      const tagTextNode = document.createTextNode(text);
+      tagEl.appendChild(tagTextNode);
   }
-
-  cardsDiv.appendChild(pEl);
+  return tagEl;
 
 }
 
-// get or set cards
+// get or set cards from local storage
 
 const getSetCards = function(player, cards) {
+
   if (cards) {
     let cardsJSON = JSON.stringify(cards);
     localStorage.setItem(player, cardsJSON);
-    //console.log(cardsJSON);
     return cards;
   } else {
     let cardsJSON = localStorage.getItem(player);
     return JSON.parse(cardsJSON);
   }
+
 }

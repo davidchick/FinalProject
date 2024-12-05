@@ -3,14 +3,16 @@ const inputName = document.getElementById('name');
 const nameSmall = inputName.parentElement.getElementsByTagName('small')[0];
 const selectBooze = document.getElementById('poison');
 const boozeSmall = selectBooze.parentElement.getElementsByTagName('small')[0];
+const enclosingDrinksDiv = document.getElementById('enclosing-drinks');
 const drinksDiv = document.getElementById('drinks');
-const drinksSmall = drinksDiv.getElementsByTagName('small')[0];
+const drinksSmall = drinksDiv.parentElement.getElementsByTagName('small')[0];
 const shuffleButton = document.getElementById('shuffle');
 const updatePlayer = document.getElementById('update-player');
 const messageDiv = document.getElementById('message');
 const cardsDiv = document.getElementById('cards');
 
 shuffleButton.classList.add('hidden');
+enclosingDrinksDiv.classList.add('hidden');
 
 class CardPlayer {
   constructor (name) {
@@ -27,6 +29,8 @@ class CardPlayer {
    };
 };
 
+//sets or gets a player name from local storage
+
 const playerName = function(name) {
   if (name) {
     localStorage.setItem('player1name', name);
@@ -35,6 +39,8 @@ const playerName = function(name) {
     return localStorage.getItem('player1name');
   }
 }
+
+// sets or gets a drink of choice from local storage
 
 const drinkOfChoice = function(drink) {
   if (drink) {
@@ -45,7 +51,9 @@ const drinkOfChoice = function(drink) {
   }
 }
 
-let playGame = function() {
+// play the game
+
+const playGame = function() {
 
   const player1 = new CardPlayer(playerName());
   const player2 = new CardPlayer('The Dealer');
@@ -62,16 +70,11 @@ let playGame = function() {
 
   let message = `Welcome, ${player1.name}! Please enjoy this delicious ${player1.drinkOfChoice}. Let's play cards!`;
 
-  const messageNode = document.createTextNode(message);
-  const h3El = document.createElement('h3');
-  h3El.appendChild(messageNode);
-
   messageDiv.innerHTML = '';
-  messageDiv.appendChild(h3El);
+  messageDiv.appendChild(renderHTML('h3', message));
 
   cardsDiv.innerHTML = '';
-
-  renderHTML('h4', 'Your hand:');
+  cardsDiv.appendChild(renderHTML('h4', 'Your hand:'));
 
   while (player1.hand.length < 6) {
     myDeck = player1.drawACard(myDeck);
@@ -83,7 +86,7 @@ let playGame = function() {
     cardsDiv.appendChild(renderCard(card, true));
   }
 
-  renderHTML('h4', `${player2.name}'s hand:`);
+  cardsDiv.appendChild(renderHTML('h4', `${player2.name}'s hand:`));
 
   while (player2.hand.length < 6) {
     myDeck = player2.drawACard(myDeck);
@@ -96,7 +99,8 @@ let playGame = function() {
   }
 
   getSetCards('thedeck', myDeck);
-  console.log(`cards left: ${myDeck.length}`)
+
+  //console.log(`cards left: ${myDeck.length}`)
 
 }
 

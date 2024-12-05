@@ -1,13 +1,9 @@
 
 a {
-    padding: 3px 6px;
-    border-radius: 5px;
-    font-size: 0.8em;
-    color: white;
-}
-
-.vivid {
-    background-color: #910991;
+  padding: 3px 6px;
+  border-radius: 5px;
+  font-size: 0.8em;
+  color: white;
 }
 
 .column {
