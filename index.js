@@ -7,9 +7,13 @@ const enclosingDrinksDiv = document.getElementById('enclosing-drinks');
 const drinksDiv = document.getElementById('drinks');
 const drinksSmall = drinksDiv.parentElement.getElementsByTagName('small')[0];
 const shuffleButton = document.getElementById('shuffle');
-const updatePlayer = document.getElementById('update-player');
+const savePlayer = document.getElementById('save-player');
 const messageDiv = document.getElementById('message');
 const cardsDiv = document.getElementById('cards');
+const actionsDiv = document.getElementById('actions');
+const updatePlayerButton = document.getElementById('update-player');
+const newGameButton = document.getElementById('new-game');
+const callButton = document.getElementById('call');
 
 shuffleButton.classList.add('hidden');
 enclosingDrinksDiv.classList.add('hidden');
@@ -59,9 +63,8 @@ const drinkOfChoice = function(drink) {
 
 const playGame = function() {
 
-  //if (playerName() && drinkOfChoice()) {
-    theForm.classList.add('hidden');
-  //}
+  theForm.classList.add('hidden');
+  actionsDiv.classList.remove('hidden');
 
   player1.name ? player1.name = inputName.value : player1 = new CardPlayer(playerName(inputName.value));
   player2.name ? player2.name = 'The Dealer' : player2 = new CardPlayer('The Dealer');
@@ -117,12 +120,10 @@ const playGame = function() {
   
   cardsDiv.appendChild(tradeButton);
 
-  cardsDiv.appendChild(renderHTML('p', '(Pick the cards you want to keep, then click trade)'));
-
+  cardsDiv.appendChild(renderHTML('p', 'Pick the cards you want to keep, then click trade (you must keep 2).'));
 
   cardsDiv.appendChild(renderHTML('h4', `${player2.name}'s hand:`));
 
-  
   while (player2.hand.length < 5) {
     myDeck = player2.drawACard(myDeck);
   }
@@ -140,6 +141,6 @@ const playGame = function() {
 
 }
 
-//if (getSetCards('player1hand')) {
-  //playGame();
-//}
+if (getSetCards('player1hand')) {
+  playGame();
+}

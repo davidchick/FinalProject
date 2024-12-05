@@ -70,13 +70,29 @@ shuffleButton.addEventListener('click', (e) => {
   fetchDrinks(selectBooze.value);
 });
   
-updatePlayer.addEventListener('click', (e) => {
+savePlayer.addEventListener('click', (e) => {
   e.preventDefault();
   
   if (formIsValid()) {
     playGame();
   }
   
+});
+
+updatePlayerButton.addEventListener('click', (e) => {
+  theForm.classList.remove('hidden');
+});
+
+newGameButton.addEventListener('click', (e) => {
+  localStorage.removeItem('player1hand');
+  localStorage.removeItem('player2hand');
+  localStorage.removeItem('selectedCards');
+  localStorage.removeItem('thedeck');
+  playGame();
+});
+
+callButton.addEventListener('click', (e) => {
+  console.log('Who won?');
 });
   
 
