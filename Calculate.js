@@ -57,16 +57,14 @@ const calculateHand = function (hand) {
 
         if (handAttributes.handArray[val]) {
             if ((handAttributes.pair) && (displayVal !== handAttributes.series1)){
-                if (handAttributes.twoPair) {
-                    handAttributes.fullHouse = true;
-                } else {
+                //if (handAttributes.twoPair) {
+                    //handAttributes.fullHouse = true;
+                //} else {
                     handAttributes.twoPair = true;
-                }
+                //}
                 handAttributes.series2 = displayVal;
             } else if (handAttributes.pair) {
-                if ((handAttributes.threeOfAKind) && (displayVal !== handAttributes.series1)) {
-                    handAttributes.fullHouse = true;
-                } else if (handAttributes.threeOfAKind) {
+                if (handAttributes.threeOfAKind) {
                     handAttributes.fourOfAKind = true;
                 } else {
                     handAttributes.threeOfAKind = true;
@@ -97,12 +95,16 @@ const calculateHand = function (hand) {
         }
 
     }
+    
+    if (handAttributes.threeOfAKind && handAttributes.twoPair) {
+        handAttributes.fullHouse = true;
+    }
 
     if (handAttributes.royalFlush) {
         result.hand = "Royal Flush!!!";
         result.rank = 0;
         result.kicker = handAttributes.highCard;
-    } else if ((handAttributes.straight) && (handAttributes.flush)) {
+    } else if (handAttributes.straightFlush) {
         result.hand = "Straight Flush";
         result.rank = 1;
         result.kicker = handAttributes.highCard;
