@@ -89,10 +89,19 @@ newGameButton.addEventListener('click', (e) => {
   localStorage.removeItem('selectedCards');
   localStorage.removeItem('thedeck');
   playGame();
+  window.location.reload();
+
 });
 
 callButton.addEventListener('click', (e) => {
+  let result = '';
   console.log('Who won?');
+  let player1result = calculateHand(getSetCards('player1hand'));
+  let player2result = calculateHand(getSetCards('player2hand'));
+
+  result = `${playerName()}: ${player1result.hand} The Dealer: ${player2result.hand}`;
+  window.alert(result);
+
 });
   
 

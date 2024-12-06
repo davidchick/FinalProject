@@ -105,6 +105,7 @@ const playGame = function() {
   tradeButton.disabled = true;
 
   tradeButton.addEventListener('click', () => {
+    
     const selectedCardsJSON = localStorage.getItem('selectedCards'); 
     selectedCards = JSON.parse(selectedCardsJSON) || [];
 

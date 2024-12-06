@@ -14,19 +14,19 @@ const getNewDeck = function() {
         switch (j) {
           case 1:
             displayVal = 'Ace';
-            value = 1;
+            value = 14;
             break
           case 11:
             displayVal = 'Jack';
-            value = 10;
+            value = 11;
             break
           case 12:
             displayVal = 'Queen';
-            value = 10;
+            value = 12;
             break
           case 13:
             displayVal = 'King';
-            value = 10;
+            value = 13;
             break
           default:
             displayVal = j;
