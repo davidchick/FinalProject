@@ -21,6 +21,7 @@ enclosingDrinksDiv.classList.add('hidden');
 let selectedCards = [];
 let player1 = {};
 let player2 = {};
+let cocktailID = 0;
 
 class CardPlayer {
   constructor (name) {
@@ -98,7 +99,7 @@ const playGame = function() {
   }
 
   const tradeButton = document.createElement('button');
-  tradeButton.innerText = 'Trade Cards';
+  tradeButton.innerText = 'Draw';
   tradeButton.classList.add('btn');
   tradeButton.classList.add('btn-primary');
   tradeButton.id = 'tradeButton';
@@ -121,7 +122,7 @@ const playGame = function() {
   
   cardsDiv.appendChild(tradeButton);
 
-  cardsDiv.appendChild(renderHTML('p', 'Pick the cards you want to keep, then click trade (you must keep 2).'));
+  cardsDiv.appendChild(renderHTML('p', 'Pick the cards you want to keep, then click \'draw\' (you must keep 2).'));
 
   cardsDiv.appendChild(renderHTML('h4', `${player2.name}'s hand:`));
 
@@ -142,6 +143,6 @@ const playGame = function() {
 
 }
 
-if (getSetCards('player1hand')) {
+if (playerName() && drinkOfChoice()) {
   playGame();
 }

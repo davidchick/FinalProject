@@ -54,12 +54,13 @@ const fetchDrinks = function(booze) {
             childNode.classList.remove('selected');
           }
         cocktailDiv.classList.add('selected');
+        cocktailID = drinks[rnd].idDrink
         });
       };
     });
 
 };
-  
+
 // event listeners for form elements
 
 selectBooze.addEventListener('change', (e) => {
@@ -94,16 +95,51 @@ newGameButton.addEventListener('click', (e) => {
 });
 
 callButton.addEventListener('click', (e) => {
+  
   let result = '';
-  console.log('Who won?');
+
+  const cocktailURL = `https://www.thecocktaildb.com/drink/${localStorage.getItem('cocktailID')}`;
+
   let player1result = calculateHand(getSetCards('player1hand'));
   let player2result = calculateHand(getSetCards('player2hand'));
 
-  result = `${playerName()}: ${player1result.hand} The Dealer: ${player2result.hand}`;
-  window.alert(result);
+  result = determineWinner(player1result, player2result);
+  
+  messageDiv.innerText = '';
+  messageDiv.style.background = 'lightgreen';
+  messageDiv.appendChild(renderHTML('h1', result));
+
+  let cocktailLink = renderHTML('a', `Another ${drinkOfChoice()}?`);
+  cocktailLink.href = cocktailURL;
+  cocktailLink.setAttribute('target', 'new');
+
+  messageDiv.appendChild(cocktailLink);
+
+  cardsDiv.innerText = '';
+  cardsDiv.style.background = 'lightgreen';
+
+  cardsDiv.appendChild(renderHTML('h4', 'Your hand:'));
+
+  for (const card of getSetCards('player1hand')) {
+    cardsDiv.appendChild(renderCard(card, true));
+  }
+
+  cardsDiv.appendChild(renderHTML('h4', 'The Dealer\'s hand:'));
+
+  for (const card of getSetCards('player2hand')) {
+    cardsDiv.appendChild(renderCard(card, true));
+  }
+
+  localStorage.removeItem('thedeck');
+  localStorage.removeItem('player1hand');
+  localStorage.removeItem('player2hand');
+
+  callButton.classList.add('hidden');
+  updatePlayerButton.classList.add('hidden');
 
 });
   
+//validates cocktail form
 
 const formIsValid = function() {
   
@@ -135,6 +171,7 @@ const formIsValid = function() {
   for (const node of drinksDiv.childNodes) {
     if (node.classList.contains('selected')) {
       drinkOfChoice(node.childNodes[0].innerText);
+      localStorage.setItem('cocktailID', cocktailID);
       cocktailIsValid = true;
       break;
     }

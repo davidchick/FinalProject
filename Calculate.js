@@ -15,8 +15,6 @@
 
 const calculateHand = function (hand) {
 
-    let handArray = [];
-
     const handAttributes = {
         handArray: [],
         suits: {},
@@ -58,7 +56,7 @@ const calculateHand = function (hand) {
         }
 
         if (handAttributes.handArray[val]) {
-            if ((handAttributes.pair) && (displayVal !== handAttributes.series1)) {
+            if ((handAttributes.pair) && (displayVal !== handAttributes.series1)){
                 if (handAttributes.twoPair) {
                     handAttributes.fullHouse = true;
                 } else {
@@ -66,7 +64,9 @@ const calculateHand = function (hand) {
                 }
                 handAttributes.series2 = displayVal;
             } else if (handAttributes.pair) {
-                if (handAttributes.threeOfAKind) {
+                if ((handAttributes.threeOfAKind) && (displayVal !== handAttributes.series1)) {
+                    handAttributes.fullHouse = true;
+                } else if (handAttributes.threeOfAKind) {
                     handAttributes.fourOfAKind = true;
                 } else {
                     handAttributes.threeOfAKind = true;
@@ -107,7 +107,7 @@ const calculateHand = function (hand) {
         result.rank = 1;
         result.kicker = handAttributes.highCard;
     } else if (handAttributes.fourOfAKind) {
-        result.hand = "Four Of A kind";
+        result.hand = "Four Of A Kind";
         result.rank = 2;
         result.kicker = handAttributes.highCard;
     } else if (handAttributes.fullHouse) {
@@ -148,6 +148,27 @@ const calculateHand = function (hand) {
     }
 
     return result;
-    console.log(handAttributes);
 
 };
+
+const determineWinner = function(player1, dealer) {
+
+    let message = '';
+
+    if (player1.rank < dealer.rank) {
+
+        message = `${playerName()} wins!!! ${player1.hand} over ${dealer.hand}.`;
+
+    } else if (player1.rank > dealer.rank) {
+
+        message = `The Dealer wins. ${dealer.hand} over ${player1.hand}.`;
+
+    } else {
+
+        message = `Tie! ${dealer.hand} and ${player1.hand}.`;
+
+    }
+
+    return message;
+
+}
