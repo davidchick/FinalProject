@@ -106,6 +106,7 @@ const formIsValid = function() {
   } else {
     inputName.classList.remove('invalid');
     nameSmall.textContent = '';
+    playerName(inputName.value);
     nameIsValid = true;
   }
   

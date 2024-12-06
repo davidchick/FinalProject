@@ -78,7 +78,7 @@ const playGame = function() {
 
   inputName.value = playerName();
 
-  let message = `Welcome, ${playerName()}! Please enjoy this delicious ${drinkOfChoice()}. Let's play cards!`;
+  let message = `Welcome, ${playerName()}! Please enjoy this delicious ${drinkOfChoice()}.`;
 
   messageDiv.innerHTML = '';
   messageDiv.appendChild(renderHTML('h3', message));
