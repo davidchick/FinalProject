@@ -12,9 +12,4 @@ describe('Final Project Tests', () => {
         expect(results).toBe(1);
     });
 
-    it('should yaaaah', () => {
-        const results = yahFunc();
-        expect(results).toBe('Yaaaah');
-    });
-
 });

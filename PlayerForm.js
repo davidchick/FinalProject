@@ -91,7 +91,6 @@ newGameButton.addEventListener('click', (e) => {
   localStorage.removeItem('thedeck');
   playGame();
   window.location.reload();
-
 });
 
 callButton.addEventListener('click', (e) => {

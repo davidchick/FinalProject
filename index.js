@@ -119,11 +119,8 @@ const playGame = function() {
 
   });
 
-  
   cardsDiv.appendChild(tradeButton);
-
-  cardsDiv.appendChild(renderHTML('p', 'Pick the cards you want to keep, then click \'draw\' (you must keep 2).'));
-
+  cardsDiv.appendChild(renderHTML('p', 'Pick the cards you want to keep, then click \'Draw\' (you must keep at least 2).'));
   cardsDiv.appendChild(renderHTML('h4', `${player2.name}'s hand:`));
 
   while (player2.hand.length < 5) {

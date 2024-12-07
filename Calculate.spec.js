@@ -153,10 +153,10 @@ describe('Calculate Hands', () => {
         ];
       const results = calculateHand(hand);
       expect(results.rank).toBe(9);
-      expect(results.hand).toBe(`${results.kicker} High`);
+      expect(results.hand).toBe(`${results.kicker.displayVal} High`);
       hand.reverse();
       expect(results.rank).toBe(9);
-      expect(results.hand).toBe(`${results.kicker} High`);
+      expect(results.hand).toBe(`${results.kicker.displayVal} High`);
     });
 
 
