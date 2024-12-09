@@ -111,6 +111,8 @@ const playGame = function() {
     
     if (numberOfDraws) {
 
+      numberOfDraws--;
+
       const selectedCardsJSON = localStorage.getItem('selectedCards'); 
       selectedCards = JSON.parse(selectedCardsJSON) || [];
 
@@ -121,13 +123,13 @@ const playGame = function() {
 
       playGame();
 
-      numberOfDraws--;
-
     } else {
 
       tradeButton.disabled = true;
 
     }
+
+    //console.log(numberOfDraws);
 
   });
 
