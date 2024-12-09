@@ -156,10 +156,10 @@ const determineWinner = function(player1, dealer) {
         message = `${playerName()} wins!!! ${player1.hand} over ${dealer.hand}.`;
     } else if (player1.rank > dealer.rank) {
         message = `The Dealer wins. ${dealer.hand} over ${player1.hand}.`;
-    } else if ((player1.rank === 9) && (player2.rank === 9)) {
-        if (player1.kicker.val > player2.kicker.val) {
+    } else if ((player1.rank === 9) && (dealer.rank === 9)) {
+        if (player1.kicker.val > dealer.kicker.val) {
             message = `${playerName()} wins!!! ${player1.hand} over ${dealer.hand}.`;
-        } else if (player2.kicker.val > player1.kicker.val) {
+        } else if (dealer.kicker.val > player1.kicker.val) {
             message = `The Dealer wins. ${dealer.hand} over ${player1.hand}.`;
         } else {
             message = `Tie! ${dealer.hand} and ${player1.hand}.`;

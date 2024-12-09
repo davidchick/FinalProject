@@ -22,6 +22,8 @@ let selectedCards = [];
 let player1 = {};
 let player2 = {};
 let cocktailID = 0;
+let numberOfPeeks = 2;
+let numberOfDraws = 2;
 
 class CardPlayer {
   constructor (name) {
@@ -107,15 +109,25 @@ const playGame = function() {
 
   tradeButton.addEventListener('click', () => {
     
-    const selectedCardsJSON = localStorage.getItem('selectedCards'); 
-    selectedCards = JSON.parse(selectedCardsJSON) || [];
+    if (numberOfDraws) {
 
-    player1.hand = getSetCards('player1hand', selectedCards);
+      const selectedCardsJSON = localStorage.getItem('selectedCards'); 
+      selectedCards = JSON.parse(selectedCardsJSON) || [];
 
-    localStorage.removeItem('selectedCards');
-    selectedCards = [];
+      player1.hand = getSetCards('player1hand', selectedCards);
 
-    playGame();
+      localStorage.removeItem('selectedCards');
+      selectedCards = [];
+
+      playGame();
+
+      numberOfDraws--;
+
+    } else {
+
+      tradeButton.disabled = true;
+
+    }
 
   });
 

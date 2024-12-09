@@ -161,3 +161,62 @@ describe('Calculate Hands', () => {
 
 
 });
+
+
+describe('Determine the Winner', () => {
+  it('Dealer has high card', () => {
+      let hand1 = {
+        hand: '10 High',
+        rank: 9,
+        kicker: {val: 10, displayVal: '10', suit: 'diamonds',
+        },
+      };
+      let hand2 = {
+        hand: 'Jack High',
+        rank: 9,
+        kicker: {val: 11, displayVal: 'Jack', suit: 'clubs',
+        },
+      };
+
+    let results = determineWinner(hand1, hand2);
+    expect(results).toBe('The Dealer wins. Jack High over 10 High.');
+  });
+
+  it('High card tie', () => {
+    let hand1 = {
+      hand: '2 High',
+      rank: 9,
+      kicker: {val: 2, displayVal: '2', suit: 'diamonds',
+      },
+    };
+    let hand2 = {
+      hand: '2 High',
+      rank: 9,
+      kicker: {val: 2, displayVal: '2', suit: 'clubs',
+      },
+    };
+
+  let results = determineWinner(hand1, hand2);
+  expect(results).toBe('Tie! 2 High and 2 High.');
+});
+
+it('Dealer wins', () => {
+  let hand1 = {
+    hand: 'Four Of A Kind',
+    rank: 2,
+    kicker: {val: 10, displayVal: '10', suit: 'diamonds',
+    },
+  };
+  let hand2 = {
+    hand: 'Royal Flush!!!',
+    rank: 0,
+    kicker: {val: 14, displayVal: 'Ace', suit: 'clubs',
+    },
+  };
+
+let results = determineWinner(hand1, hand2);
+expect(results).toBe('The Dealer wins. Royal Flush!!! over Four Of A Kind.');
+});
+
+
+});
