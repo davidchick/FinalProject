@@ -107,12 +107,13 @@ const playGame = function() {
   tradeButton.id = 'tradeButton';
   tradeButton.disabled = true;
 
+  
   tradeButton.addEventListener('click', () => {
-    
+
     if (numberOfDraws) {
 
       numberOfDraws--;
-
+      
       const selectedCardsJSON = localStorage.getItem('selectedCards'); 
       selectedCards = JSON.parse(selectedCardsJSON) || [];
 
@@ -121,16 +122,14 @@ const playGame = function() {
       localStorage.removeItem('selectedCards');
       selectedCards = [];
 
+      //console.log(numberOfDraws);
+
       playGame();
 
     } else {
-
       tradeButton.disabled = true;
-
     }
-
-    //console.log(numberOfDraws);
-
+  
   });
 
   cardsDiv.appendChild(tradeButton);

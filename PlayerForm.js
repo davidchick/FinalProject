@@ -18,8 +18,12 @@ const fetchDrinks = function(booze) {
 
       shuffleButton.classList.remove('hidden');
       enclosingDrinksDiv.classList.remove('hidden');
+      selectBooze.classList.remove('invalid');
+      boozeSmall.textContent = '';
       drinksDiv.classList.remove('invalid');
       drinksSmall.textContent = '';
+
+
       while (drinksDiv.firstChild) {
         drinksDiv.removeChild(drinksDiv.firstChild);
       }
@@ -169,9 +173,9 @@ const formIsValid = function() {
   
   for (const node of drinksDiv.childNodes) {
     if (node.classList.contains('selected')) {
+      cocktailIsValid = true;
       drinkOfChoice(node.childNodes[0].innerText);
       localStorage.setItem('cocktailID', cocktailID);
-      cocktailIsValid = true;
       break;
     }
   }
